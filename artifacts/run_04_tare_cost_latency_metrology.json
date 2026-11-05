@@ -1,0 +1,9 @@
+{
+    "step":  14,
+    "tool":  "tare",
+    "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\tare\\target\\release\\tare.exe",
+    "exit_code":  0,
+    "passed":  true,
+    "stdout":  "========================================================================================================\n                  TARE METROLOGY REFERENCE: COST PER SUCCESSFUL TASK \u0026 PARETO GATING                    \n========================================================================================================\nScenario                               Quality   Tokens/Req   Cost/Call   Cost/Success (CPST)   p95 Latency   Verdict\n--------------------------------------------------------------------------------------------------------\n1. Baseline Production Agent            80.0%       1,850      $0.0360          $0.0450           1,840ms     [BASELINE]\n2. Prompt Cache \u0026 Context Prune         80.0%         980      $0.0210          $0.0264 (-41%)    1,120ms     [SHIP: Quality-Flat Efficiency Win]\n3. Cheap Model Swap (Vanity Trap)       32.0%       1,650      $0.0200 (-44%)   $0.0625 (+39%)    4,200ms     [BLOCKED: Vanity Call Cost Trap]\n4. Pareto Breakthrough Model            90.0%       1,200      $0.0270          $0.0300 (-33%)    1,280ms     [SHIP: Pareto Dominant Win]\n5. Unbounded Reasoning Loop             81.0%       4,800      $0.0910          $0.1123 (+150%)   6,800ms     [BLOCKED: Latency SLA Breach]\n========================================================================================================\nKey Ground Truth:\n  - Tracking cost per call hides failure rate and retry blowup.\n  - Cost Per Successful Task (CPST) = Gross Task Spend / Total Tasks Passed.\n  - A change that keeps quality flat while cutting CPST 40% is a high-impact win that deserves to ship.\n\n",
+    "stderr":  ""
+}

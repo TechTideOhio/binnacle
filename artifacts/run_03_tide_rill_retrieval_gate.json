@@ -1,0 +1,9 @@
+{
+    "step":  5,
+    "tool":  "tide-rill",
+    "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\tide-rill\\target\\release\\tide-rill.exe",
+    "exit_code":  0,
+    "passed":  true,
+    "stdout":  "{\n  \"passed\": true,\n  \"checks\": [\n    {\n      \"metric\": \"recall_macro\",\n      \"threshold\": 0.5,\n      \"observed\": 0.5,\n      \"passed\": true\n    },\n    {\n      \"metric\": \"mrr\",\n      \"threshold\": 0.5,\n      \"observed\": 0.5,\n      \"passed\": true\n    },\n    {\n      \"metric\": \"support_rate\",\n      \"threshold\": 0.5,\n      \"observed\": 0.5,\n      \"passed\": true\n    }\n  ],\n  \"report\": {\n    \"version\": 2,\n    \"k\": 2,\n    \"ndcg_gain\": \"linear\",\n    \"queries\": [\n      {\n        \"id\": \"example\",\n        \"recall\": 0.5,\n        \"precision\": 0.5,\n        \"hit\": 1.0,\n        \"reciprocal_rank\": 0.5,\n        \"ndcg\": 0.23981246656813146,\n        \"judged_at_k\": 0.5,\n        \"returned_total\": 3,\n        \"returned_at_k\": 2,\n        \"judged_positives\": 2\n      }\n    ],\n    \"mean_reciprocal_rank\": 0.5,\n    \"mrr_eligible_queries\": 1,\n    \"faithfulness\": {\n      \"support_rate\": 0.5,\n      \"supported\": 1,\n      \"checkable\": 2,\n      \"not_checkable\": 0,\n      \"answers\": 1,\n      \"lexical_checked\": 0,\n      \"lexical_supported\": 0,\n      \"lexical_support_rate\": null,\n      \"label_conflicts\": 0\n    }\n  }\n}\n",
+    "stderr":  ""
+}

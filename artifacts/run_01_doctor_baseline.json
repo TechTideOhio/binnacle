@@ -1,0 +1,92 @@
+[
+    {
+        "step":  1,
+        "tool":  "reval",
+        "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\reval\\target\\release\\reval.exe",
+        "responds":  true
+    },
+    {
+        "step":  2,
+        "tool":  "gild",
+        "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\gild\\target\\release\\gild.exe",
+        "responds":  true
+    },
+    {
+        "step":  3,
+        "tool":  "tessel",
+        "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\tessel\\target\\release\\tessel.exe",
+        "responds":  true
+    },
+    {
+        "step":  4,
+        "tool":  "assay",
+        "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\assay\\target\\release\\assay.exe",
+        "responds":  true
+    },
+    {
+        "step":  5,
+        "tool":  "tide-rill",
+        "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\tide-rill\\target\\release\\tide-rill.exe",
+        "responds":  true
+    },
+    {
+        "step":  6,
+        "tool":  "keel",
+        "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\keel\\target\\release\\keel.exe",
+        "responds":  true
+    },
+    {
+        "step":  7,
+        "tool":  "temper",
+        "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\temper\\target\\release\\temper.exe",
+        "responds":  true
+    },
+    {
+        "step":  8,
+        "tool":  "parley",
+        "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\parley\\target\\release\\parley.exe",
+        "responds":  true
+    },
+    {
+        "step":  9,
+        "tool":  "gavel",
+        "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\gavel\\target\\release\\gavel.exe",
+        "responds":  true
+    },
+    {
+        "step":  10,
+        "tool":  "poise",
+        "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\poise\\target\\release\\poise.exe",
+        "responds":  true
+    },
+    {
+        "step":  11,
+        "tool":  "plumb",
+        "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\plumb\\target\\release\\plumb.exe",
+        "responds":  true
+    },
+    {
+        "step":  12,
+        "tool":  "weir",
+        "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\weir\\target\\release\\weir.exe",
+        "responds":  true
+    },
+    {
+        "step":  13,
+        "tool":  "eddy",
+        "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\eddy\\target\\release\\eddy.exe",
+        "responds":  true
+    },
+    {
+        "step":  14,
+        "tool":  "tare",
+        "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\tare\\target\\release\\tare.exe",
+        "responds":  true
+    },
+    {
+        "step":  15,
+        "tool":  "tether",
+        "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\tether\\target\\release\\tether.exe",
+        "responds":  true
+    }
+]

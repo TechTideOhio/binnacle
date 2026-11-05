@@ -1,0 +1,9 @@
+{
+    "step":  15,
+    "tool":  "tether",
+    "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\tether\\target\\release\\tether.exe",
+    "exit_code":  0,
+    "passed":  true,
+    "stdout":  "=== TideOS Eval Kit (Tool 15): Continuous Evaluation \u0026 Release Invariants ===\n\n| Loop Invariant | Purpose | Enforcement Engine | Failure Consequence |\n|---|---|---|---|\n| 1. Bug Reproduction Case | Production bug cannot close without test | tether close \u003cfailure-id\u003e | Blocker: Refuses closure |\n| 2. Secret-Scrubbed Capture | Strip all API keys, PII, paths | src/redact.rs Fail-closed | RedactionFailure exception |\n| 3. SimHash Deduplication | Cluster near-duplicate crashes | SimHash64 Hamming dist \u003c= 3 | Merges frequency counter |\n| 4. Held-Out Anti-Overfit | Detect prompt tuning cherry-picking | 20% Held-Out Split | BlockedHeldOutRegression |\n| 5. Suite Freshness | Prevent stagnant eval suite releases | min_new_cases_per_release | BlockedSuiteStale |\n| 6. Category Regression Floor | Prevent stealth degradation | category.\u003cname\u003e.floor | BlockedCategoryRegression |\n| 7. Cryptographic Sealing | Prevent tampering with cases | sha256-framed-v1 lockfile | Drift mismatch fails gate |\n| 8. Sequential Provenance | Immutable loop history chain | SHA-256 Merkle Ledger | Chain breach fails gate |\n\n",
+    "stderr":  ""
+}

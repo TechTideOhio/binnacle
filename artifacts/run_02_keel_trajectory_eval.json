@@ -1,0 +1,9 @@
+{
+    "step":  6,
+    "tool":  "keel",
+    "binary":  "C:\\Users\\Admin\\TechTide\\Tools\\keel\\target\\release\\keel.exe",
+    "exit_code":  0,
+    "passed":  true,
+    "stdout":  "\u0007=== KEEL TRAJECTORY EVALUATION SUITE ===\nSuite: softfactory-trajectories v1.0.0 | Status: PASS | Score: 91.75% (min: 85.00%)\nCases: 2/3 passed | Cost/Latency Bugs: 1 | Total Tokens: 86110 | Latency: 5160ms\n\n--- Strata Breakdown ---\n  [critical] weight: 0.45 | cases: 1/1 passed | score: 100.00%\n  [efficiency] weight: 0.30 | cases: 0/1 passed | score: 72.50%\n  [recovery] weight: 0.25 | cases: 1/1 passed | score: 100.00%\n\n--- Case Details ---\n  * [PASS] sf-optimal-code-fix (critical): score=100.00% | prec=100.00% rec=100.00% lcs=100.00% | steps=3/3 (eff=100.00%)\n  * [FAIL] sf-cost-latency-guard (efficiency): score=72.50% | prec=21.43% rec=100.00% lcs=100.00% | steps=14/3 (eff=21.43%)\n    ! COST/LATENCY BUG: 11 excess steps, 61800 wasted tokens\n  * [PASS] sf-diagnostic-repair (recovery): score=100.00% | prec=100.00% rec=100.00% lcs=100.00% | steps=5/5 (eff=100.00%)\n",
+    "stderr":  ""
+}
