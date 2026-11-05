@@ -1,0 +1,29 @@
+[package]
+name = "binnacle-eval"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.82"
+license = "MIT"
+description = "Binnacle: one Rust evaluator agent entry point that drives the 15-tool TideOS Eval Kit through its CLIs."
+
+[[bin]]
+name = "binnacle"
+path = "src/main.rs"
+
+[lib]
+name = "binnacle"
+path = "src/lib.rs"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+all = { level = "deny", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+unwrap_used = "deny"
+missing_errors_doc = "allow"
+must_use_candidate = "allow"
