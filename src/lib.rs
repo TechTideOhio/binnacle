@@ -1,5 +1,13 @@
-//! Binnacle: a thin, deterministic evaluator-agent front end over the `TideOS` Eval Kit.
-//! It adds no scoring logic. Every verdict comes from the owning tool's own CLI.
+//! Binnacle: the unified evaluator-agent orchestrator for the 15-tool `TideOS` evaluation stack.
+//!
+//! # Architecture
+//! Binnacle follows the Unix philosophy of small, decoupled tools. It serves as the conductor
+//! and CLI supervisor over 15 standalone, zero-FFI Rust evaluation engines (`reval`, `gild`,
+//! `tessel`, `assay`, `keel`, etc.).
+//!
+//! Each engine is maintained as an independent repository under the [`TechTideOhio`](https://github.com/TechTideOhio)
+//! organization. Engines can be executed standalone in CI or pre-commit hooks, or discovered and
+//! orchestrated via `binnacle` to emit normalized JSON execution envelopes.
 
 #![forbid(unsafe_code)]
 

@@ -25,31 +25,40 @@ In traditional stacks, agent evaluations are fragmented across brittle Python sc
 - **Fail-Closed Gatekeeper**: Dispatches to dedicated, mathematically bounded evaluation engines (LCS sequence alignment, SimHash deduplication, exact McNemar tests, SplitMix64 bootstrap CIs).
 - **Uniform CLI & Envelope Contract**: Standardized JSON envelopes across all 15 stages of evaluation.
 
+## Architecture & Ecosystem
+
+`binnacle` is designed around the Unix philosophy of small, single-purpose, decoupled tools:
+
+- **The Orchestrator (`binnacle`)**: A lightweight supervisor CLI (`binnacle-eval`) that discovers installed engines, conducts healthchecks (`binnacle doctor`), executes evaluation steps (`binnacle run <tool>`), and normalizes results into standardized JSON envelopes.
+- **The 15 Evaluation Engines**: Each tool (`reval`, `gild`, `tessel`, `assay`, `keel`, etc.) is an independent, zero-FFI, pure-Rust crate maintained in its own dedicated repository under the [`TechTideOhio`](https://github.com/TechTideOhio) organization.
+- **Zero-Coupling Discovery**: `binnacle` does not vendor or statically link the engines. It dynamically resolves their binaries from your system `PATH`, Cargo bin (`~/.cargo/bin`), or local workspace directories, allowing you to use any tool standalone in CI or pre-commit hooks.
+
 ```mermaid
 flowchart TD
-    AGENT["Autonomous Agent Run\n(Claude, Codex, OpenCode, Cursor, Muse)"] --> BINNACLE["binnacle run <tool|step>"]
+    AGENT["Autonomous Agent Run\n(Claude, Codex, OpenCode, Cursor, Muse)"] --> BINNACLE["binnacle CLI (Orchestrator)\ngithub.com/TechTideOhio/binnacle"]
     
-    subgraph STACK ["TideOS 15-Tool Evaluation Harness"]
+    BINNACLE -->|"Discovers & Invokes"| ENGINES
+    
+    subgraph ENGINES ["15 Standalone Rust Evaluation Engines (Independent Repositories)"]
         direction TB
-        S1["1. reval (Error Analysis)"]
-        S2["2. gild (Golden Dataset)"]
-        S3["3. tessel (Synthetic Tuples)"]
-        S4["4. assay (Deterministic Assertions)"]
-        S5["5. tide-rill (Retrieval vs Generation)"]
-        S6["6. keel (Trajectory Evals)"]
-        S7["7. temper (pass@k vs pass^k)"]
-        S8["8. parley (Simulated Users)"]
-        S9["9. gavel (Judge Alignment)"]
-        S10["10. poise (Pairwise Bias)"]
-        S11["11. plumb (Paired Statistics)"]
-        S12["12. weir (CI Gating)"]
-        S13["13. eddy (Online Production)"]
-        S14["14. tare (Cost & Latency)"]
-        S15["15. tether (Close the Loop)"]
+        E1["reval ➔ github.com/TechTideOhio/reval"]
+        E2["gild ➔ github.com/TechTideOhio/gild"]
+        E3["tessel ➔ github.com/TechTideOhio/tessel"]
+        E4["assay ➔ github.com/TechTideOhio/assay"]
+        E5["tide-rill ➔ github.com/TechTideOhio/tide-rill"]
+        E6["keel ➔ github.com/TechTideOhio/keel"]
+        E7["temper ➔ github.com/TechTideOhio/temper"]
+        E8["parley ➔ github.com/TechTideOhio/parley"]
+        E9["gavel ➔ github.com/TechTideOhio/gavel"]
+        E10["poise ➔ github.com/TechTideOhio/poise"]
+        E11["plumb ➔ github.com/TechTideOhio/plumb"]
+        E12["weir ➔ github.com/TechTideOhio/weir"]
+        E13["eddy ➔ github.com/TechTideOhio/eddy"]
+        E14["tare ➔ github.com/TechTideOhio/tare"]
+        E15["tether ➔ github.com/TechTideOhio/tether"]
     end
 
-    BINNACLE --> STACK
-    STACK --> VERDICT{"Deterministic Gate"}
+    ENGINES --> VERDICT{"Deterministic Gate"}
     VERDICT -->|"Pass (exit 0)"| DEPLOY["Ship to Production / CI Green"]
     VERDICT -->|"Fail (exit 1/2)"| HARVEST["tether capture\n(Harvest Failure to Gold Set)"]
 ```

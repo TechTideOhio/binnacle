@@ -34,6 +34,30 @@ When contributing code to Binnacle, please keep these non-negotiable principles 
 
 ---
 
+## Binnacle (Orchestrator) vs. Individual Evaluation Engines
+
+Before opening a pull request, determine whether your change belongs in Binnacle or in one of the standalone tool repositories:
+
+- **Contribute to Binnacle (`TechTideOhio/binnacle`)**: If your change involves the orchestrator CLI (`table`, `doctor`, `run`), binary discovery paths, output envelope serialization, installation scripts, or overall multi-tool healthchecks.
+- **Contribute to an Evaluation Engine**: If you are fixing or extending the domain-specific evaluation logic of an individual engine (e.g. golden dataset hashing in `gild`, trajectory scoring in `keel`, or statistical testing in `plumb`), submit issues and pull requests directly to that tool's dedicated repository:
+  - Step 1: [`TechTideOhio/reval`](https://github.com/TechTideOhio/reval)
+  - Step 2: [`TechTideOhio/gild`](https://github.com/TechTideOhio/gild)
+  - Step 3: [`TechTideOhio/tessel`](https://github.com/TechTideOhio/tessel)
+  - Step 4: [`TechTideOhio/assay`](https://github.com/TechTideOhio/assay)
+  - Step 5: [`TechTideOhio/tide-rill`](https://github.com/TechTideOhio/tide-rill)
+  - Step 6: [`TechTideOhio/keel`](https://github.com/TechTideOhio/keel)
+  - Step 7: [`TechTideOhio/temper`](https://github.com/TechTideOhio/temper)
+  - Step 8: [`TechTideOhio/parley`](https://github.com/TechTideOhio/parley)
+  - Step 9: [`TechTideOhio/gavel`](https://github.com/TechTideOhio/gavel)
+  - Step 10: [`TechTideOhio/poise`](https://github.com/TechTideOhio/poise)
+  - Step 11: [`TechTideOhio/plumb`](https://github.com/TechTideOhio/plumb)
+  - Step 12: [`TechTideOhio/weir`](https://github.com/TechTideOhio/weir)
+  - Step 13: [`TechTideOhio/eddy`](https://github.com/TechTideOhio/eddy)
+  - Step 14: [`TechTideOhio/tare`](https://github.com/TechTideOhio/tare)
+  - Step 15: [`TechTideOhio/tether`](https://github.com/TechTideOhio/tether)
+
+---
+
 ## Where to Start
 
 If you are new to Binnacle or looking for your first contribution:
