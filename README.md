@@ -58,25 +58,29 @@ flowchart TD
 
 ## The 15 Evaluation Steps
 
+> [!NOTE]
+> **Architecture: Orchestrator vs Engines**  
+> `binnacle` follows the Unix philosophy of small, sharp tools. It is the **conductor and CLI supervisor**, not a monolithic codebase. Each of the 15 evaluation engines is a completely independent, zero-FFI, pure-Rust repository under the [`TechTideOhio`](https://github.com/TechTideOhio) organization. You can run any tool standalone in your pre-commit hooks, or use `binnacle` to discover, healthcheck, and orchestrate them together.
+
 `binnacle` routes directly to the specialized TideOS evaluation tool responsible for each step of production AI engineering:
 
-| # | Step | Tool | Core Engine & Invariants |
-|---|---|---|---|
-| **1** | **Error Analysis** | `reval` | Open/axial failure coding, causal Bayesian trace DAGs, OTel export. |
-| **2** | **Golden Dataset** | `gild` | Stratified ground-truth authoring, schema validation, cryptographic versioning. |
-| **3** | **Synthetic Dimensions** | `tessel` | Covering arrays ($P \times I \times C \times E$) with pairwise mathematical coverage guarantees. |
-| **4** | **Deterministic Assertions** | `assay` | JSON Schema, JSON Pointer, zero-variance regex, pure-Rust in-memory DB/RLS. |
-| **5** | **Retrieval vs Generation** | `tide-rill` | Separate recall@k, MRR, nDCG from context claim lexical support rates and conflict gates. |
-| **6** | **Trajectory Evals** | `keel` | Tool-call precision/recall, LCS order alignment, step efficiency, 14 vs 3 step cost bug detection. |
-| **7** | **pass@k vs pass^k** | `temper` | Multi-trial capability vs production reliability, real sampling temperature checks. |
-| **8** | **Simulated Users** | `parley` | Multi-turn stateful conversational eval, hidden goals, sycophancy resistance. |
-| **9** | **Judge Alignment** | `gavel` | Binary classifier calibration, TPR/TNR reporting, Rogan-Gladen prevalence debiasing. |
-| **10** | **Pairwise Judge Bias** | `poise` | Order-swapped double-blind adjudication, length-skew normalization. |
-| **11** | **Paired Statistics** | `plumb` | SplitMix64 BCa bootstrap CIs, exact McNemar test, TOST equivalence gating. |
-| **12** | **CI Gating** | `weir` | Per-category non-compensatory regression prevention in pull requests. |
-| **13** | **Online Production** | `eddy` | Deterministic basis-point hash sampling, async judge pools, CUSUM drift detection. |
-| **14** | **Cost & Latency** | `tare` | Tokens per request, Cost Per Successful Task (CPST), tail latency (p50/p95/p99) Pareto gates. |
-| **15** | **Close the Loop** | `tether` | Secret-scrubbed failure harvesting, SimHash deduplication, fail-closed model release replay. |
+| # | Step | Tool | Dedicated Repository | Core Engine & Invariants |
+|---|---|---|---|---|
+| **1** | **Error Analysis** | [`reval`](https://github.com/TechTideOhio/reval) | [TechTideOhio/reval](https://github.com/TechTideOhio/reval) | Open/axial failure coding, causal Bayesian trace DAGs, OTel export. |
+| **2** | **Golden Dataset** | [`gild`](https://github.com/TechTideOhio/gild) | [TechTideOhio/gild](https://github.com/TechTideOhio/gild) | Stratified ground-truth authoring, schema validation, cryptographic versioning. |
+| **3** | **Synthetic Dimensions** | [`tessel`](https://github.com/TechTideOhio/tessel) | [TechTideOhio/tessel](https://github.com/TechTideOhio/tessel) | Covering arrays ($P \times I \times C \times E$) with pairwise mathematical coverage guarantees. |
+| **4** | **Deterministic Assertions** | [`assay`](https://github.com/TechTideOhio/assay) | [TechTideOhio/assay](https://github.com/TechTideOhio/assay) | JSON Schema, JSON Pointer, zero-variance regex, pure-Rust in-memory DB/RLS. |
+| **5** | **Retrieval vs Generation** | [`tide-rill`](https://github.com/TechTideOhio/tide-rill) | [TechTideOhio/tide-rill](https://github.com/TechTideOhio/tide-rill) | Separate recall@k, MRR, nDCG from context claim lexical support rates and conflict gates. |
+| **6** | **Trajectory Evals** | [`keel`](https://github.com/TechTideOhio/keel) | [TechTideOhio/keel](https://github.com/TechTideOhio/keel) | Tool-call precision/recall, LCS order alignment, step efficiency, 14 vs 3 step cost bug detection. |
+| **7** | **pass@k vs pass^k** | [`temper`](https://github.com/TechTideOhio/temper) | [TechTideOhio/temper](https://github.com/TechTideOhio/temper) | Multi-trial capability vs production reliability, real sampling temperature checks. |
+| **8** | **Simulated Users** | [`parley`](https://github.com/TechTideOhio/parley) | [TechTideOhio/parley](https://github.com/TechTideOhio/parley) | Multi-turn stateful conversational eval, hidden goals, sycophancy resistance. |
+| **9** | **Judge Alignment** | [`gavel`](https://github.com/TechTideOhio/gavel) | [TechTideOhio/gavel](https://github.com/TechTideOhio/gavel) | Binary classifier calibration, TPR/TNR reporting, Rogan-Gladen prevalence debiasing. |
+| **10** | **Pairwise Judge Bias** | [`poise`](https://github.com/TechTideOhio/poise) | [TechTideOhio/poise](https://github.com/TechTideOhio/poise) | Order-swapped double-blind adjudication, length-skew normalization. |
+| **11** | **Paired Statistics** | [`plumb`](https://github.com/TechTideOhio/plumb) | [TechTideOhio/plumb](https://github.com/TechTideOhio/plumb) | SplitMix64 BCa bootstrap CIs, exact McNemar test, TOST equivalence gating. |
+| **12** | **CI Gating** | [`weir`](https://github.com/TechTideOhio/weir) | [TechTideOhio/weir](https://github.com/TechTideOhio/weir) | Per-category non-compensatory regression prevention in pull requests. |
+| **13** | **Online Production** | [`eddy`](https://github.com/TechTideOhio/eddy) | [TechTideOhio/eddy](https://github.com/TechTideOhio/eddy) | Deterministic basis-point hash sampling, async judge pools, CUSUM drift detection. |
+| **14** | **Cost & Latency** | [`tare`](https://github.com/TechTideOhio/tare) | [TechTideOhio/tare](https://github.com/TechTideOhio/tare) | Tokens per request, Cost Per Successful Task (CPST), tail latency (p50/p95/p99) Pareto gates. |
+| **15** | **Close the Loop** | [`tether`](https://github.com/TechTideOhio/tether) | [TechTideOhio/tether](https://github.com/TechTideOhio/tether) | Secret-scrubbed failure harvesting, SimHash deduplication, fail-closed model release replay. |
 
 ---
 
