@@ -80,6 +80,38 @@ flowchart TD
 
 ---
 
+## Installation
+
+### Option 1: Cargo Install (Recommended for Rust Developers)
+```bash
+cargo install --git https://github.com/TechTideOhio/binnacle
+```
+
+### Option 2: Pre-Built Release Binaries
+Pre-compiled standalone binaries for Windows (`x86_64`), macOS (`x86_64`), and Linux (`x86_64`) are available on the [Latest Releases](https://github.com/TechTideOhio/binnacle/releases/latest) page.
+
+#### Windows (PowerShell)
+```powershell
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/TechTideOhio/binnacle/main/install.ps1 -OutFile install.ps1
+powershell -ExecutionPolicy Bypass -File install.ps1
+```
+
+#### macOS / Linux (Bash)
+```bash
+curl -fsSL https://raw.githubusercontent.com/TechTideOhio/binnacle/main/install.sh -o install.sh
+bash install.sh
+```
+
+### Option 3: Build from Source
+```bash
+git clone https://github.com/TechTideOhio/binnacle.git
+cd binnacle
+cargo build --release
+# Binary is available at target/release/binnacle
+```
+
+---
+
 ## 60-Second Quickstart
 
 ### Inspect the Evaluation Table
@@ -91,6 +123,7 @@ binnacle table
 ```bash
 binnacle doctor
 ```
+> **Tip**: `binnacle doctor` automatically scans local directories, `Tools/<tool>`, `../<tool>`, `~/.cargo/bin`, and your system `PATH`. You can also supply a custom root directory with `--root <path>`.
 
 ### Execute a Step or Tool
 ```bash

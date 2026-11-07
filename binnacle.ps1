@@ -1,4 +1,3 @@
-#!/usr/bin/env pwsh
 # binnacle: TideOS Evaluator Agent runner wrapper
 
 [CmdletBinding()]
@@ -23,6 +22,6 @@ if (-not (Test-Path $BinRelease) -and -not (Test-Path $BinDebug)) {
     }
 }
 
-$Bin = if (Test-Path $BinRelease) { $BinRelease } else { $DebugBin }
+$Bin = if (Test-Path $BinRelease) { $BinRelease } else { $BinDebug }
 & $Bin @Arguments
 exit $LASTEXITCODE

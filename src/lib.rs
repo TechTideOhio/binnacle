@@ -117,27 +117,46 @@ pub fn find_step(tool: &str) -> Option<&'static Step> {
         .find(|s| s.tool == tool || s.step.to_string() == tool)
 }
 
-/// Locate tool root directory under `<root>/<tool>` or sibling `<root>/../<tool>`.
+/// Locate tool root directory under `<root>/<tool>`, sibling `<root>/../<tool>`, or `<root>/Tools/<tool>`.
 #[must_use]
 pub fn find_tool_dir(root: &Path, tool: &str) -> Option<PathBuf> {
     let direct = root.join(tool);
     if direct.is_dir() {
         return Some(direct);
     }
+    let in_tools = root.join("Tools").join(tool);
+    if in_tools.is_dir() {
+        return Some(in_tools);
+    }
     let parent = root.join("..").join(tool);
     if parent.is_dir() {
         return Some(parent);
     }
+    let parent_tools = root.join("..").join("Tools").join(tool);
+    if parent_tools.is_dir() {
+        return Some(parent_tools);
+    }
     None
 }
 
-/// Locate a built binary under `<root>/<tool>/target/{release,debug}` or sibling `../<tool>/target/...`
+/// Locate a built binary under `<root>/<tool>/target/{release,debug}`, sibling paths,
+/// current executable's directory, ~/.cargo/bin, or system PATH.
 #[must_use]
 pub fn find_binary(root: &Path, tool: &str) -> Option<PathBuf> {
     let exe = format!("{tool}{}", std::env::consts::EXE_SUFFIX);
-    let candidates = [
+    let mut candidates = vec![
         root.join(tool).join("target").join("release").join(&exe),
         root.join(tool).join("target").join("debug").join(&exe),
+        root.join("Tools")
+            .join(tool)
+            .join("target")
+            .join("release")
+            .join(&exe),
+        root.join("Tools")
+            .join(tool)
+            .join("target")
+            .join("debug")
+            .join(&exe),
         root.join("..")
             .join(tool)
             .join("target")
@@ -148,8 +167,47 @@ pub fn find_binary(root: &Path, tool: &str) -> Option<PathBuf> {
             .join("target")
             .join("debug")
             .join(&exe),
+        root.join("..")
+            .join("Tools")
+            .join(tool)
+            .join("target")
+            .join("release")
+            .join(&exe),
+        root.join("..")
+            .join("Tools")
+            .join(tool)
+            .join("target")
+            .join("debug")
+            .join(&exe),
     ];
-    candidates.into_iter().find(|p| p.is_file())
+
+    if let Ok(current_exe) = std::env::current_exe() {
+        if let Some(bin_dir) = current_exe.parent() {
+            candidates.push(bin_dir.join(&exe));
+        }
+    }
+
+    if let Some(home) = std::env::var_os("USERPROFILE").or_else(|| std::env::var_os("HOME")) {
+        candidates.push(PathBuf::from(home).join(".cargo").join("bin").join(&exe));
+    }
+    if let Some(cargo_home) = std::env::var_os("CARGO_HOME") {
+        candidates.push(PathBuf::from(cargo_home).join("bin").join(&exe));
+    }
+
+    if let Some(found) = candidates.into_iter().find(|p| p.is_file()) {
+        return Some(found);
+    }
+
+    if let Some(path_var) = std::env::var_os("PATH") {
+        for dir in std::env::split_paths(&path_var) {
+            let p = dir.join(&exe);
+            if p.is_file() {
+                return Some(p);
+            }
+        }
+    }
+
+    None
 }
 
 /// Run a tool's own CLI and wrap the result. `passed` is true only for exit code 0.

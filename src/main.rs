@@ -17,8 +17,12 @@ fn main() -> ExitCode {
     let mut args: Vec<String> = env::args().skip(1).collect();
     let mut root = if std::path::Path::new("reval").is_dir() {
         PathBuf::from(".")
+    } else if std::path::Path::new("Tools/reval").is_dir() {
+        PathBuf::from("Tools")
     } else if std::path::Path::new("../reval").is_dir() {
         PathBuf::from("..")
+    } else if std::path::Path::new("../Tools/reval").is_dir() {
+        PathBuf::from("../Tools")
     } else {
         PathBuf::from(".")
     };

@@ -1,5 +1,7 @@
 # Binnacle Installer for Windows
-# Usage: irm https://raw.githubusercontent.com/TechTideOhio/binnacle/main/install.ps1 | iex
+# Usage:
+#   Invoke-WebRequest -Uri https://raw.githubusercontent.com/TechTideOhio/binnacle/main/install.ps1 -OutFile install.ps1
+#   powershell -ExecutionPolicy Bypass -File install.ps1
 
 $ErrorActionPreference = "Stop"
 $Repo = "TechTideOhio/binnacle"
@@ -16,23 +18,32 @@ try {
         throw "No Windows archive found in latest release."
     }
     $DownloadUrl = $Asset.browser_download_url
+    
+    $TempZip = Join-Path $env:TEMP "binnacle-release.zip"
+    Invoke-WebRequest -Uri $DownloadUrl -OutFile $TempZip -UseBasicParsing
+    New-Item -ItemType Directory -Force -Path $InstallDir | Out-Null
+    Expand-Archive -Path $TempZip -DestinationPath $InstallDir -Force
+    Remove-Item -Force $TempZip
 } catch {
-    Write-Host "Warning: Could not fetch release asset ($_.Exception.Message). Falling back to cargo install..." -ForegroundColor Yellow
+    Write-Host "Notice: Release asset download encountered ($($_.Exception.Message)). Building via cargo install..." -ForegroundColor Yellow
     cargo install --git "https://github.com/$Repo"
-    return
+    $InstallDir = Join-Path $env:USERPROFILE ".cargo\bin"
 }
-
-$TempZip = Join-Path $env:TEMP "binnacle-release.zip"
-Invoke-WebRequest -Uri $DownloadUrl -OutFile $TempZip -UseBasicParsing
-New-Item -ItemType Directory -Force -Path $InstallDir | Out-Null
-Expand-Archive -Path $TempZip -DestinationPath $InstallDir -Force
-Remove-Item -Force $TempZip
 
 $UserPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User)
 if ($UserPath -notlike "*$InstallDir*") {
     [Environment]::SetEnvironmentVariable("Path", "$UserPath;$InstallDir", [EnvironmentVariableTarget]::User)
-    $env:Path += ";$InstallDir"
     Write-Host "Added $InstallDir to User PATH." -ForegroundColor Green
 }
+$env:Path = "$InstallDir;$env:Path"
 
-Write-Host "Binnacle successfully installed! Run 'binnacle doctor' to get started." -ForegroundColor Green
+Write-Host "Binnacle successfully installed to $InstallDir!" -ForegroundColor Green
+Write-Host "Verifying installation..." -ForegroundColor Cyan
+
+$BinnacleBin = Join-Path $InstallDir $BinName
+if (Test-Path $BinnacleBin) {
+    & $BinnacleBin table | Out-Null
+    Write-Host "Verification successful! Run 'binnacle doctor' to inspect tool health." -ForegroundColor Green
+} else {
+    Write-Host "Installed, but $BinnacleBin not found directly. Please ensure $InstallDir is in your PATH." -ForegroundColor Yellow
+}
