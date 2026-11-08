@@ -246,6 +246,18 @@ pub fn run_tool(root: &Path, tool: &str, args: &[String]) -> Result<Envelope, St
     })
 }
 
+/// Look up a JSON Pointer in the envelope.
+/// Strings are returned without quotes; other values as JSON text.
+pub fn extract(env: &Envelope, pointer: &str) -> Option<String> {
+    let v = serde_json::to_value(env).ok()?;
+    let found = v.pointer(pointer)?;
+    Some(
+        found
+            .as_str()
+            .map_or_else(|| found.to_string(), str::to_owned),
+    )
+}
+
 /// Check every step has a built binary that launches with `--help`.
 #[must_use]
 pub fn doctor(root: &Path) -> Vec<DoctorRow> {
