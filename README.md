@@ -101,7 +101,7 @@ cargo install --git https://github.com/TechTideOhio/binnacle
 ```
 
 ### Option 2: Pre-Built Release Binaries
-Pre-compiled standalone binaries for Windows (`x86_64`), macOS (`x86_64`), and Linux (`x86_64`) are available on the [Latest Releases](https://github.com/TechTideOhio/binnacle/releases/latest) page.
+Pre-compiled standalone binaries for Windows (`x86_64`), macOS (`x86_64`, `aarch64`), and Linux (`x86_64`, `aarch64`) each with a `.sha256` checksum that the installers verify. Windows ARM64 runs the `x86_64` build under emulation. Download from the [Latest Releases](https://github.com/TechTideOhio/binnacle/releases/latest) page.
 
 #### Windows (PowerShell)
 ```powershell
