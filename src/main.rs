@@ -1,7 +1,7 @@
 use std::{env, path::PathBuf, process::ExitCode};
 
 const USAGE: &str =
-    "usage: binnacle [--root <Tools dir>] table | doctor | run <tool|step> [args...]";
+    "usage: binnacle [--root <Tools dir>] table | doctor | run [--pointer </json/pointer>] <tool|step> [args...]";
 
 fn emit<T: serde::Serialize>(v: &T) -> ExitCode {
     match serde_json::to_string_pretty(v) {
@@ -47,20 +47,44 @@ fn main() -> ExitCode {
                 ExitCode::from(1)
             }
         }
-        Some("run") if args.len() >= 2 => match binnacle::run_tool(&root, &args[1], &args[2..]) {
-            Ok(env) => {
-                emit(&env);
-                if env.passed {
-                    ExitCode::SUCCESS
-                } else {
-                    ExitCode::from(1)
+        Some("run") => {
+            let mut rest = &args[1..];
+            let mut pointer = None;
+            if rest.first().map(String::as_str) == Some("--pointer") {
+                let Some(p) = rest.get(1) else {
+                    eprintln!("error: --pointer needs a value, e.g. /passed");
+                    return ExitCode::from(2);
+                };
+                pointer = Some(p.clone());
+                rest = &rest[2..];
+            }
+            let Some((tool, tool_args)) = rest.split_first() else {
+                eprintln!("{USAGE}");
+                return ExitCode::from(2);
+            };
+            match binnacle::run_tool(&root, tool, tool_args) {
+                Ok(env) => {
+                    if let Some(p) = pointer {
+                        let Some(s) = binnacle::extract(&env, &p) else {
+                            eprintln!("error: pointer '{p}' not found in envelope");
+                            return ExitCode::from(2);
+                        };
+                        println!("{s}");
+                    } else {
+                        emit(&env);
+                    }
+                    if env.passed {
+                        ExitCode::SUCCESS
+                    } else {
+                        ExitCode::from(1)
+                    }
+                }
+                Err(e) => {
+                    eprintln!("error: {e}");
+                    ExitCode::from(2)
                 }
             }
-            Err(e) => {
-                eprintln!("error: {e}");
-                ExitCode::from(2)
-            }
-        },
+        }
         _ => {
             eprintln!("{USAGE}");
             ExitCode::from(2)
