@@ -148,7 +148,11 @@ binnacle run tide-rill gate examples/synthetic.json examples/thresholds-pass.jso
 
 # Check cost-latency Pareto trade-offs (Step 14 / tare)
 binnacle run tare table
+
+# Print a single envelope field instead of the full JSON (no jq needed)
+binnacle run --pointer /passed keel check --suite packs/softfactory.toml --root .
 ```
+> binnacle's own flags go between `run` and the tool name; everything after the tool name is passed to the tool unchanged.
 
 ---
 
