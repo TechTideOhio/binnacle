@@ -248,14 +248,14 @@ pub fn run_tool(root: &Path, tool: &str, args: &[String]) -> Result<Envelope, St
 
 /// Look up a JSON Pointer in the envelope.
 /// Strings are returned without quotes; other values as JSON text.
-pub fn extract(env: &Envelope, pointer: &str) -> Option<String> {
-    let v = serde_json::to_value(env).ok()?;
-    let found = v.pointer(pointer)?;
-    Some(
+/// Returns `Ok(None)` when the pointer matches nothing.
+pub fn extract(env: &Envelope, pointer: &str) -> Result<Option<String>, String> {
+    let v = serde_json::to_value(env).map_err(|e| format!("could not serialize envelope: {e}"))?;
+    Ok(v.pointer(pointer).map(|found| {
         found
             .as_str()
-            .map_or_else(|| found.to_string(), str::to_owned),
-    )
+            .map_or_else(|| found.to_string(), str::to_owned)
+    }))
 }
 
 /// Check every step has a built binary that launches with `--help`.

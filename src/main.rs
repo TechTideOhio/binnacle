@@ -65,11 +65,17 @@ fn main() -> ExitCode {
             match binnacle::run_tool(&root, tool, tool_args) {
                 Ok(env) => {
                     if let Some(p) = pointer {
-                        let Some(s) = binnacle::extract(&env, &p) else {
-                            eprintln!("error: pointer '{p}' not found in envelope");
-                            return ExitCode::from(2);
-                        };
-                        println!("{s}");
+                        match binnacle::extract(&env, &p) {
+                            Ok(Some(s)) => println!("{s}"),
+                            Ok(None) => {
+                                eprintln!("error: pointer '{p}' not found in envelope");
+                                return ExitCode::from(2);
+                            }
+                            Err(e) => {
+                                eprintln!("error: {e}");
+                                return ExitCode::from(2);
+                            }
+                        }
                     } else {
                         emit(&env);
                     }
