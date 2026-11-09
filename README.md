@@ -153,6 +153,7 @@ binnacle run tare table
 binnacle run --pointer /passed keel check --suite packs/softfactory.toml --root .
 ```
 > binnacle's own flags go between `run` and the tool name; everything after the tool name is passed to the tool unchanged.
+> `--pointer ""` prints the whole envelope as compact JSON. The `--pointer=/x` form is not supported; use `--pointer /x`.
 
 ---
 
